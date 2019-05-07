@@ -28,7 +28,7 @@ public class Application {
      *
      * @param args аргументы командной строки
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         /*
          * Задачи выполняются последовательно. В порядке,
          * определённом массивом tasks.
@@ -37,6 +37,9 @@ public class Application {
          * порядок и/или закомментировать любой из элементов
          * массива.
          */
-        for (Task task : tasks) task.run();
+        for (Task task : tasks) {
+            try { task.run(); }
+            catch (Exception e) { e.printStackTrace(); }
+        }
     }
 }

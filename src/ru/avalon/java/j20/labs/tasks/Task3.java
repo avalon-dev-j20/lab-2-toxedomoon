@@ -1,9 +1,12 @@
 package ru.avalon.java.j20.labs.tasks;
 
 import ru.avalon.java.j20.labs.Task;
+import ru.avalon.java.j20.labs.models.Country;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -23,6 +26,11 @@ public class Task3 implements Task {
         File output = new File("countries_buffered_mode_output.txt");
         Collection<String> lines = read(input);
         write(output, lines);
+
+        System.out.println("Task 3 ... DONE");
+//        lines.forEach(System.out::println);
+
+
 
         /*
          * TODO(Студент): Выполнить задание №3
@@ -52,7 +60,24 @@ public class Task3 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private Collection<String> read(File file) throws IOException {
-        throw new UnsupportedOperationException("Not implement yet!");
+        Collection<String> collection = new ArrayList<>();
+
+        try (FileReader reader = new FileReader(file);
+             BufferedReader bufferedReader = new BufferedReader(reader)) {
+
+            while (bufferedReader.ready()) {
+                String line = bufferedReader.readLine();
+                collection.add(line);
+            }
+        }
+
+        /* Другой вариант для JRE 11
+        String pathName = file.getPath();
+        Path path = Path.of(pathName);
+        Collection<String> collection = Files.readAllLines(path);
+        */
+
+        return collection;
     }
 
     /**
@@ -66,6 +91,10 @@ public class Task3 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private void write(File file, Collection<String> collection) throws IOException {
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try (PrintWriter writer = new PrintWriter(file)) {
+            for (String line : collection) {
+                writer.println(line);
+            }
+        }
     }
 }
